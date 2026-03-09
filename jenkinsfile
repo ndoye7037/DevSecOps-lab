@@ -1,3 +1,4 @@
+/ Jenkinsfile
 pipeline {
     agent any
     environment {
@@ -48,7 +49,7 @@ pipeline {
             post {
                 always {
                     archiveArtifacts artifacts: 'bandit-report.json',
-    allowEmptyArchive: true
+                                     allowEmptyArchive: true
                 }
             }
         }
@@ -93,7 +94,7 @@ pipeline {
                     // Sauvegarder les rapports
                     publishHTML([
                         allowMissing: true,
- reportDir: '.',
+                        reportDir: '.',
                         reportFiles: 'zap-report.html',
                         reportName: 'ZAP Security Report'
                     ])
@@ -103,12 +104,11 @@ pipeline {
             }
         }
     }
-    post {
+     post {
         success {
-            echo '
+            echo 'Pipeline terminé ! Consulte les rapports de sécurité.'
         }
         failure {
-            echo '
+            echo 'Pipeline échoué. Regarde les logs pour plus de détails.'
         }
-    }
 }
