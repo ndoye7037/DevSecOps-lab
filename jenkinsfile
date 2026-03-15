@@ -10,9 +10,7 @@ pipeline {
         // ── STAGE 1 : Récupérer le code ──
         stage('Checkout') {
             steps {
-                echo '
-📥
- Récupération du code source...'
+                echo 'Récupération du code source...'
                 checkout scm
             }
         }
@@ -22,13 +20,9 @@ pipeline {
                 docker { image 'python:3.11-slim' }
             }
             steps {
-                echo '
-🔧
-🧪
- Installation des dépendances...'
+                echo '🧪Installation des dépendances...'
                 sh 'pip install -r app/requirements.txt pytest'
-                echo '
- Exécution des tests unitaires...'
+                echo '🔧Exécution des tests unitaires...'
                 sh 'pytest tests/ -v'
             }
         }
@@ -38,9 +32,7 @@ pipeline {
                 docker { image 'python:3.11-slim' }
             }
             steps {
-                echo '
-🔍
- Analyse de sécurité statique du code (SAST)...'
+                echo '🔍 Analyse de sécurité statique du code (SAST)...'
                 sh 'pip install bandit'
                 // -ll = niveau HIGH uniquement, -r = récursif
                 sh 'bandit -r app/ -f json -o bandit-report.json || true'
